@@ -1,0 +1,17 @@
+{
+  "name": "inbox",
+  "version": "1.0.0",
+  "description": "A simple smart contract to write messages to",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "solidity"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "solc": "^0.4.17"
+  }
+}
