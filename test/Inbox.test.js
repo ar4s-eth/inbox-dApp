@@ -2,28 +2,49 @@ const assert = require('assert');
 const ganache = require('ganache-cli');
 const Web3 = require('web3');
 const web3 = new Web3(ganache.provider());
+const { interface, bytecode } = require('../compile');
 
-class Car {
-  park() {
-    return 'stopped';
-  }
+let accounts;
+let inbox;
 
-  drive() {
-    return 'vroom';
-  }
-}
+beforeEach(async () => {
+  // Get a list of accounts
+  accounts = await web3.eth.getAccounts();
 
-let car;
-
-beforeEach(() => {
-  car = new Car();
+  // Use one of those accounts to deploy
+  // a contract
+  inbox = await new web3.eth.Contract(JSON.parse(interface))
+    .deploy({ data: bytecode, arguments: ['Hello World'] })
+    .send({ from: accounts[0], gas: '1000000' })
 });
 
-describe('Car', () => {
-  it(`Should return 'stopped'`, () => {
-    assert.strictEqual(car.park(), 'stopped');
-  });
-  it(`Should return 'vroom'`, () => {
-    assert.strictEqual(car.drive(), 'vroom');
-  });
+describe('Inbox', () => {
+  it('Should deploy a contract', () => {
+    console.log(inbox)
+  })
 })
+
+// class Car {
+//   park() {
+//     return 'stopped';
+//   }
+
+//   drive() {
+//     return 'vroom';
+//   }
+// }
+
+// let car;
+
+// beforeEach(() => {
+//   car = new Car();
+// });
+
+// describe('Car', () => {
+//   it(`Should return 'stopped'`, () => {
+//     assert.strictEqual(car.park(), 'stopped');
+//   });
+//   it(`Should return 'vroom'`, () => {
+//     assert.strictEqual(car.drive(), 'vroom');
+//   });
+// })
