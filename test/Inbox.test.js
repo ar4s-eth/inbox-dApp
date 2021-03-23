@@ -20,9 +20,9 @@ beforeEach(async () => {
 
 describe('Inbox', () => {
   it('Should deploy a contract', () => {
-    console.log(inbox)
-  })
-})
+    assert.ok(inbox.options.address);
+  });
+});
 
 // class Car {
 //   park() {
