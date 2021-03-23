@@ -34,7 +34,7 @@ describe('Inbox', () => {
     assert.strictEqual(message, initialString);
   });
 
-  it(`Should change the message`, async () => {
+  it('Should change the message', async () => {
     await inbox.methods.setMessage('Peaches').send({ from: accounts[0] });
     const message = await inbox.methods.message().call();
     assert.strictEqual(message, 'Peaches');
