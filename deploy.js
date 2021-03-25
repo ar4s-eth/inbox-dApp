@@ -1,16 +1,43 @@
-// Load private environmental variables into process.env
+// require('dotenv').config()
+// const HDWalletProvider = require('@truffle/hdwallet-provider')
+// const Web3 = require('web3');
+// const abi = require('./compile').abi; // the contract interface aka ABI
+// const bytecode = require('./compile').evm.bytecode.object;
+
+// const provider = new HDWalletProvider(process.env.PRIVATE_KEY, process.env.INFURA_API_KEY)
+// const web3 = new Web3(provider);
+
+// const deploy = async () => {
+//     const accounts = await web3.eth.getAccounts();
+//     console.log('Attempting to deploy from account', accounts[0]);
+
+//     const result = await new web3.eth.Contract(abi)
+//     .deploy({data: bytecode, arguments: ['Hi there!']})
+//     .send({from: accounts[0]});
+
+//     console.log('Contract deployed to: ', result.options.address);
+// };
+
+// deploy();
+
 require('dotenv').config()
-const HDWalletProvider = require('@truffle/hdwallet-provider');
+const HDWalletProvider = require('@truffle/hdwallet-provider')
 const Web3 = require('web3');
-const { interface, bytecode } = require('./compile');
+const abi = require('./compile').abi; // the contract interface aka ABI
+const bytecode = require('./compile').evm.bytecode.object;
 
-// Assign ENV variables
-const privateSeed = process.env.SEED_PHRASE
-const ropsten = process.env.INFURA_ROPSTEN_KEY
-
-// Create provider
-const provider = new HDWalletProvider(
-  privateSeed, ropsten
-);
-
+const provider = new HDWalletProvider(process.env.PRIVATE_KEY, process.env.INFURA_API_KEY);
 const web3 = new Web3(provider);
+
+const deploy = async () => {
+    const accounts = await web3.eth.getAccounts();
+    console.log('Attempting to deploy from account', accounts[1]);
+
+    const result = await new web3.eth.Contract(abi)
+    .deploy({data: bytecode, arguments: ['Hi there!']})
+    .send({from: accounts[1]});
+
+    console.log('Contract deployed to: ', result.options.address);
+};
+
+deploy();
